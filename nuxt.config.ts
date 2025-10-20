@@ -6,7 +6,6 @@ export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css'],
   
   // Configuration pour GitHub Pages
-  ssr: false,
   nitro: {
     prerender: {
       routes: ['/']
