@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      OXC_FORCE_WASM: '1'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
           
       - name: Install dependencies
@@ -47,6 +49,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    env:
+      OXC_FORCE_WASM: '1'
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
