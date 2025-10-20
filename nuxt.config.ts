@@ -4,6 +4,14 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss'],
   css: ['~/assets/css/tailwind.css'],
+  
+  // Configuration pour GitHub Pages
+  ssr: false,
+  nitro: {
+    prerender: {
+      routes: ['/']
+    }
+  },
   app: {
     head: {
       title: 'ClésEnMain - Votre Agence Immobilière',
