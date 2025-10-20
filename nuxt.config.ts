@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   // Configuration pour GitHub Pages
   nitro: {
     prerender: {
-      routes: ['/']
+      routes: ['/', '/nos_biens']
     }
   },
   
@@ -20,6 +20,8 @@ export default defineNuxtConfig({
     viewer: true,
   },
   app: {
+    // Base URL nécessaire pour GitHub Pages
+    baseURL: '/clesenmain-agence-immobiliere/',
     head: {
       title: 'ClésEnMain - Votre Agence Immobilière',
       meta: [
