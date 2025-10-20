@@ -11,6 +11,14 @@ export default defineNuxtConfig({
       routes: ['/']
     }
   },
+  
+  // Configuration Tailwind CSS
+  tailwindcss: {
+    cssPath: '~/assets/css/tailwind.css',
+    configPath: 'tailwind.config.js',
+    exposeConfig: false,
+    viewer: true,
+  },
   app: {
     head: {
       title: 'ClésEnMain - Votre Agence Immobilière',
