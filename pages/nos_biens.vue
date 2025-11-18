@@ -110,19 +110,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-12 mt-20">
-      <div class="container mx-auto px-6">
-        <div class="text-center text-gray-400">
-          <p class="mb-2">&copy; 2025 ClésEnMain. Tous droits réservés.</p>
-          <p class="text-sm">
-            Développé avec ❤️ par 
-            <a href="https://github.com/SarahTld" target="_blank" rel="noopener noreferrer" class="text-primary-500 hover:text-primary-400 transition-colors font-semibold">
-              Sarah T
-            </a>
-          </p>
-        </div>
-      </div>
-    </footer>
+    <AppFooter />
   </div>
 </template>
 
