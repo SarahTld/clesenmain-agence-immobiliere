@@ -10,9 +10,9 @@
             </svg>
             <span class="text-xl font-bold text-gray-900">ClésEnMain</span>
           </NuxtLink>
-          <NuxtLink to="/nos_biens" class="text-primary-600 hover:text-primary-700 font-medium transition-colors">
-            ← Retour aux biens
-          </NuxtLink>
+          <button @click="goBack" class="text-primary-600 hover:text-primary-700 font-medium transition-colors">
+            ← Retour
+          </button>
         </div>
       </div>
     </nav>
@@ -189,11 +189,22 @@
 
 <script setup>
 const route = useRoute()
+const router = useRouter()
 const { getBienById } = useBiens()
 
 // Récupérer l'ID depuis les paramètres de la route
 const bienId = parseInt(route.params.id)
 const bien = getBienById(bienId)
+
+// Fonction pour retourner à la page précédente
+const goBack = () => {
+  // Utiliser l'historique du navigateur directement
+  if (process.client) {
+    window.history.back()
+  } else {
+    navigateTo('/')
+  }
+}
 
 // Fonction pour formater le prix
 const formatPrice = (price) => {

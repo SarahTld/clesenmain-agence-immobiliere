@@ -422,6 +422,11 @@ const handleSearch = () => {
   })
 }
 
+// Gestion du scroll pour le header
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+}
+
 onMounted(() => {
   // Intersection Observer pour les animations au scroll
   observer = new IntersectionObserver(
@@ -441,11 +446,6 @@ onMounted(() => {
   // Observer tous les éléments avec la classe scroll-reveal
   const elements = document.querySelectorAll('.scroll-reveal')
   elements.forEach((el) => observer?.observe(el))
-
-  // Gestion du scroll pour le header
-  const handleScroll = () => {
-    isScrolled.value = window.scrollY > 50
-  }
   
   window.addEventListener('scroll', handleScroll)
 })
