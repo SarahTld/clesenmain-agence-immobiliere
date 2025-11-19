@@ -80,7 +80,7 @@
 
       <!-- Grille de biens -->
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="bien in filteredBiens" :key="bien.id" class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-2">
+        <NuxtLink v-for="bien in filteredBiens" :key="bien.id" :to="`/biens/${bien.id}`" class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-2 block">
           <div :class="['relative h-64 bg-gradient-to-br overflow-hidden', bien.gradient]">
             <div class="absolute top-4 right-4 bg-white px-4 py-2 rounded-full transform group-hover:scale-110 transition-transform">
               <span class="text-primary-600 font-bold">{{ formatPrice(bien.prix) }}</span>
@@ -103,9 +103,9 @@
             <div v-else class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
               <span>📐 {{ bien.surface }} m²</span>
             </div>
-            <button class="text-primary-600 font-semibold group-hover:underline">Voir les détails →</button>
+            <span class="text-primary-600 font-semibold group-hover:underline">Voir les détails →</span>
           </div>
-        </div>
+        </NuxtLink>
       </div>
     </div>
 

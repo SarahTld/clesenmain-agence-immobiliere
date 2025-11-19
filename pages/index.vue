@@ -91,68 +91,31 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Property Card 1 -->
-          <div class="scroll-reveal group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-2">
-            <div class="relative h-64 bg-gradient-to-br from-primary-400 to-primary-600 overflow-hidden">
+          <NuxtLink v-for="bien in featuredBiens" :key="bien.id" :to="`/biens/${bien.id}`" class="scroll-reveal group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-2 block">
+            <div :class="['relative h-64 bg-gradient-to-br overflow-hidden', bien.gradient]">
               <div class="absolute top-4 right-4 bg-white px-4 py-2 rounded-full transform group-hover:scale-110 transition-transform">
-                <span class="text-primary-600 font-bold">495 000 €</span>
+                <span class="text-primary-600 font-bold">{{ formatPrice(bien.prix) }}</span>
+              </div>
+              <div class="absolute top-4 left-4 bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                {{ bien.type }}
               </div>
               <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
             <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-2">Villa Moderne avec Piscine</h3>
-              <p class="text-gray-600 mb-4">📍 Aix-en-Provence</p>
-              <div class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
-                <span>🛏️ 4 chambres</span>
-                <span>🛁 2 salles de bain</span>
-                <span>📐 180 m²</span>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">{{ bien.titre }}</h3>
+              <p class="text-gray-600 mb-4">📍 {{ bien.location }}</p>
+              <div v-if="bien.type !== 'Terrain'" class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                <span v-if="bien.chambres > 0">🛏️ {{ bien.chambres }} {{ bien.chambres > 1 ? 'chambres' : 'chambre' }}</span>
+                <span v-if="bien.sallesDeBain > 0">🛁 {{ bien.sallesDeBain }} {{ bien.sallesDeBain > 1 ? 'salles de bain' : 'salle de bain' }}</span>
+                <span>📐 {{ bien.surface }} m²</span>
               </div>
-              <button class="text-primary-600 font-semibold group-hover:underline">Voir les détails →</button>
-            </div>
-          </div>
-
-          <!-- Property Card 2 -->
-          <div class="scroll-reveal group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-2">
-            <div class="relative h-64 bg-gradient-to-br from-blue-400 to-blue-600 overflow-hidden">
-              <div class="absolute top-4 right-4 bg-white px-4 py-2 rounded-full transform group-hover:scale-110 transition-transform">
-                <span class="text-primary-600 font-bold">325 000 €</span>
+              <div v-else class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                <span>📐 {{ bien.surface }} m²</span>
               </div>
-              <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity"></div>
-              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <span class="text-primary-600 font-semibold group-hover:underline">Voir les détails →</span>
             </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-2">Appartement Vue Mer</h3>
-              <p class="text-gray-600 mb-4">📍 Nice</p>
-              <div class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
-                <span>🛏️ 3 chambres</span>
-                <span>🛁 1 salle de bain</span>
-                <span>📐 95 m²</span>
-              </div>
-              <button class="text-primary-600 font-semibold group-hover:underline">Voir les détails →</button>
-            </div>
-          </div>
-
-          <!-- Property Card 3 -->
-          <div class="scroll-reveal group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-2">
-            <div class="relative h-64 bg-gradient-to-br from-green-400 to-green-600 overflow-hidden">
-              <div class="absolute top-4 right-4 bg-white px-4 py-2 rounded-full transform group-hover:scale-110 transition-transform">
-                <span class="text-primary-600 font-bold">675 000 €</span>
-              </div>
-              <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity"></div>
-              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-2">Mas Provençal Authentique</h3>
-              <p class="text-gray-600 mb-4">📍 Luberon</p>
-              <div class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
-                <span>🛏️ 5 chambres</span>
-                <span>🛁 3 salles de bain</span>
-                <span>📐 250 m²</span>
-              </div>
-              <button class="text-primary-600 font-semibold group-hover:underline">Voir les détails →</button>
-            </div>
-          </div>
+          </NuxtLink>
         </div>
       </div>
     </section>
@@ -172,9 +135,36 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
             </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-4">Acheter</h3>
-            <p class="text-gray-600 mb-6">Trouvez la propriété de vos rêves avec nos experts qui vous accompagnent à chaque étape.</p>
-            <button class="btn-secondary w-full">En savoir plus</button>
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Acheter un bien immobilier</h3>
+            <p class="text-gray-600 mb-4">Trouvez la propriété de vos rêves avec nos experts qui vous accompagnent à chaque étape de votre projet d'achat immobilier.</p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-6">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Recherche personnalisée selon vos critères et budget</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Visites accompagnées et conseils d'experts</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Négociation et accompagnement administratif</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Suivi jusqu'à la signature de l'acte notarié</span>
+              </li>
+            </ul>
+            <p class="text-sm text-gray-500 mb-6">Que vous cherchiez un appartement, une maison, un terrain ou un local commercial, notre équipe vous guide dans votre projet d'achat immobilier en Provence-Alpes-Côte d'Azur.</p>
+            <button @click="openServiceModal('acheter')" class="btn-secondary w-full">En savoir plus</button>
           </div>
 
           <div class="scroll-reveal bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
@@ -183,9 +173,36 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-4">Vendre</h3>
-            <p class="text-gray-600 mb-6">Vendez au meilleur prix grâce à notre expertise du marché et notre réseau d'acheteurs qualifiés.</p>
-            <button class="btn-secondary w-full">En savoir plus</button>
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Vendre votre bien immobilier</h3>
+            <p class="text-gray-600 mb-4">Vendez au meilleur prix grâce à notre expertise du marché immobilier et notre réseau d'acheteurs qualifiés et sérieux.</p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-6">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Estimation gratuite et précise de votre bien</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Mise en valeur et promotion de votre propriété</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Négociation optimale pour maximiser votre prix de vente</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Accompagnement juridique et administratif complet</span>
+              </li>
+            </ul>
+            <p class="text-sm text-gray-500 mb-6">Notre expertise en vente immobilière vous garantit une transaction sécurisée et rapide, avec un accompagnement personnalisé à chaque étape de la vente de votre bien.</p>
+            <button @click="openServiceModal('vendre')" class="btn-secondary w-full">En savoir plus</button>
           </div>
 
           <div class="scroll-reveal bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
@@ -194,9 +211,36 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
             </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-4">Estimer</h3>
-            <p class="text-gray-600 mb-6">Obtenez une estimation précise et gratuite de votre bien par nos experts certifiés.</p>
-            <button class="btn-secondary w-full">En savoir plus</button>
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Estimation immobilière gratuite</h3>
+            <p class="text-gray-600 mb-4">Obtenez une estimation précise et gratuite de votre bien immobilier par nos experts certifiés, basée sur l'analyse du marché local.</p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-6">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Évaluation gratuite et sans engagement</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Analyse comparative du marché (CMI)</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Visite de votre bien par un expert</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Rapport détaillé avec prix de vente recommandé</span>
+              </li>
+            </ul>
+            <p class="text-sm text-gray-500 mb-6">Que vous souhaitiez vendre, acheter ou simplement connaître la valeur de votre bien immobilier, notre estimation professionnelle vous donne une vision claire du marché.</p>
+            <button @click="openServiceModal('estimer')" class="btn-secondary w-full">En savoir plus</button>
           </div>
         </div>
       </div>
@@ -249,17 +293,32 @@
       @sign-up="handleSignUpSubmit"
       @back-to-login="handleBackToLoginFromSignUp"
     />
+
+    <!-- Modal de service -->
+    <ServiceModal 
+      :is-open="isServiceModalOpen" 
+      :service="currentService"
+      @close="closeServiceModal"
+      @contact="handleServiceContact"
+    />
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue'
+
+const { biens } = useBiens()
 
 let observer = null;
 const isScrolled = ref(false)
 const isLoginModalOpen = ref(false)
 const isForgotPasswordModalOpen = ref(false)
 const isSignUpModalOpen = ref(false)
+const isServiceModalOpen = ref(false)
+const currentService = ref('acheter')
+
+// Afficher les 3 premiers biens en vedette
+const featuredBiens = computed(() => biens.slice(0, 3))
 
 // Formulaire de recherche
 const searchForm = ref({
@@ -267,6 +326,16 @@ const searchForm = ref({
   location: '',
   budget: ''
 })
+
+// Fonction pour formater le prix
+const formatPrice = (price) => {
+  return new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(price)
+}
 
 // Gestion de la modal de connexion
 const openLoginModal = () => {
@@ -319,6 +388,26 @@ const handleSignUpSubmit = (data) => {
 
 const handleBackToLoginFromSignUp = () => {
   isLoginModalOpen.value = true
+}
+
+// Gestion de la modal de service
+const openServiceModal = (service) => {
+  currentService.value = service
+  isServiceModalOpen.value = true
+}
+
+const closeServiceModal = () => {
+  isServiceModalOpen.value = false
+}
+
+const handleServiceContact = (service) => {
+  // Scroll vers la section contact
+  setTimeout(() => {
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, 300)
 }
 
 // Fonction de recherche

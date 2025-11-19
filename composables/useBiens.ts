@@ -156,9 +156,15 @@ export const useBiens = () => {
     return filtered;
   };
 
+  // Fonction pour récupérer un bien par son ID
+  const getBienById = (id: number) => {
+    return biens.find(bien => bien.id === id) || null;
+  };
+
   return {
     biens,
-    filterBiens
+    filterBiens,
+    getBienById
   };
 };
 
